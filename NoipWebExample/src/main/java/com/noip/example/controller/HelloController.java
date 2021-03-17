@@ -114,5 +114,34 @@ public class HelloController {
 		}
 	    return result; 
 	}
+	
+	@RequestMapping("/testDelAPI")
+	public ResultEmployeeApi deleteApi() {
+		
+		String uri = "http://localhost:8080//API/employee/delete/19";
+		
+		RestTemplate restTemplate = new RestTemplate();
+	    ResultEmployeeApi result =restTemplate.getForObject(uri, ResultEmployeeApi.class);
+	    return result; 
+		
+		/*
+		 * HttpHeaders headers = new HttpHeaders();
+		 * headers.setContentType(MediaType.APPLICATION_JSON);
+		 * 
+		 * 
+		 * Employee employee = new Employee();
+		 * employee.setEmailId("Haitvhugo@gmail.com"); employee.setFirstName("hugo");
+		 * employee.setLastName("aio");
+		 * 
+		 * ObjectMapper jsonMapper = new ObjectMapper();
+		 * 
+		 * RestTemplate restTemplate = new RestTemplate(); ResultEmployeeApi result
+		 * =null; try { HttpEntity<String> entity = new
+		 * HttpEntity<String>(jsonMapper.writeValueAsString(employee),headers); result =
+		 * restTemplate.postForEntity(uri, entity,ResultEmployeeApi.class).getBody(); }
+		 * catch (RestClientException|JsonProcessingException e) { e.printStackTrace();
+		 * } return result;
+		 */
+	}
 
 }
