@@ -36,7 +36,7 @@ public class EmployeeController {
 		return resultEmployeeApi;
 	}
 	
-	@RequestMapping(value = "/API/employees",consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/API/employees/save",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResultEmployeeApi saveEmployee(@RequestBody Employee employee) {
 		employeeService.save(employee);
 		ResultEmployeeApi resultEmployeeApi = new ResultEmployeeApi();

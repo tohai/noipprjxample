@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noip.example.dto.Employee;
 import com.noip.example.dto.ResultEmployeeApi;
 import com.noip.example.entities.Company;
@@ -78,6 +85,33 @@ public class HelloController {
 		String uri = "http://localhost:8080/API/employees";
 	    RestTemplate restTemplate = new RestTemplate();
 	    ResultEmployeeApi result =restTemplate.getForObject(uri, ResultEmployeeApi.class);
+	    return result; 
+	}
+	
+	@RequestMapping("/testSaveAPI")
+	public ResultEmployeeApi saveApi() {
+		
+		String uri = "http://localhost:8080/API/employees/save";
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		
+		Employee employee = new Employee();
+		employee.setEmailId("Haitvhugo@gmail.com");
+		employee.setFirstName("hugo");
+		employee.setLastName("aio");
+		
+		ObjectMapper jsonMapper = new ObjectMapper();
+		
+	    RestTemplate restTemplate = new RestTemplate();
+	    ResultEmployeeApi result =null;
+		try {
+			HttpEntity<String> entity = new HttpEntity<String>(jsonMapper.writeValueAsString(employee),headers);
+			result = restTemplate.postForEntity(uri, entity,ResultEmployeeApi.class).getBody();
+		} catch (RestClientException|JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	    return result; 
 	}
 
